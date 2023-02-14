@@ -1,3 +1,4 @@
+---
 - name: Clone Paru helper
   ansible.builtin.git:
     repo: https://aur.archlinux.org/paru.git
