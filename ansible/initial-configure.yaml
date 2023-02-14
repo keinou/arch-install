@@ -8,11 +8,11 @@
         repo: https://aur.archlinux.org/paru.git
         dest: /tmp/paru
 
-    - name: Registra o repositório do Ubuntu do SQL Server
-      command: chdir=/tmp/paru sudo makepkg -si
+    - name: Compila Paru
+      command: chdir=/tmp/paru makepkg -si --noconfirm
 
     - name: Instala programas e pacotes necessarios
-      command: paru -S --noconfirm --noedit {{ item }}
+      command: paru -S --noconfirm {{ item }}
       with_items:
         - code
         - postman
