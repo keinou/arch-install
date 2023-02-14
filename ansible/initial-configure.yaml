@@ -1,15 +1,19 @@
 ---
-- name: Clone Paru helper
-  ansible.builtin.git:
-    repo: https://aur.archlinux.org/paru.git
-    dest: /tmp/paru
+- name: "Configuracao Arch Linux"
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Clone Paru helper
+      ansible.builtin.git:
+        repo: https://aur.archlinux.org/paru.git
+        dest: /tmp/paru
 
-- name: Registra o repositório do Ubuntu do SQL Server
-  command: chdir=/tmp/paru sudo makepkg -si
+    - name: Registra o repositório do Ubuntu do SQL Server
+      command: chdir=/tmp/paru sudo makepkg -si
 
-- name: Instala programas e pacotes necessarios
-  command: paru -S --noconfirm --noedit {{ item }}
-  with_items:
-    - code
-    - postman
-    - docker
+    - name: Instala programas e pacotes necessarios
+      command: paru -S --noconfirm --noedit {{ item }}
+      with_items:
+        - code
+        - postman
+        - docker
