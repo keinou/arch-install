@@ -10,6 +10,17 @@
 
     - name: Compila Paru
       command: chdir=/tmp/paru makepkg -si --noconfirm
+    
+    - name: Cria diretorio ssh
+      file:
+        path: "{{ item.dir }}"
+        state: directory
+      with_items:
+        - dir: "~/.ssh/"
+
+    - name: Gera uma chave ssh
+      community.crypto.openssh_keypair:
+        path: ~/.ssh/id_rsa
 
     - name: Instala programas e pacotes necessarios
       command: paru -S --noconfirm {{ item }}
@@ -17,3 +28,6 @@
         - code
         - postman
         - docker
+        - kwin-bismuth
+        - kvantum-qt5
+        - openssh

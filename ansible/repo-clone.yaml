@@ -1,0 +1,70 @@
+---
+- name: "Configuracao Arch Linux"
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Cria diretorios dos projetos
+      file:
+        path: "{{ item.dir }}"
+        state: directory
+      with_items:
+        - dir: "~/projects"
+        - dir: "~/projects/advpl"
+        - dir: "~/projects/angular" # TODO
+        - dir: "~/projects/dart"
+        - dir: "~/projects/dev-containers" # TODO
+        - dir: "~/projects/devops"
+        - dir: "~/projects/docker"
+        - dir: "~/projects/flutter"
+        - dir: "~/projects/golang"
+        - dir: "~/projects/iac"
+        - dir: "~/projects/ranni"
+
+    - name: Clone Protheus Project
+      ansible.builtin.git:
+        repo: git@git.agroamazonia.io:agro-amazonia/Protheus.git
+        dest: ~/projects/advpl/protheus
+
+    # TODO -> Angular
+    
+    - name: Clone MW Project
+      ansible.builtin.git:
+        repo: git@git.agroamazonia.io:rafael-karczevski/mw.git
+        dest: ~/projects/dart/mw
+
+    # TODO -> Dev Containers
+
+    - name: Clone Kong Project
+      ansible.builtin.git:
+        repo: git@git.agroamazonia.io:agro-amazonia/kong.git
+        dest: ~/projects/devops/kong
+
+    - name: Clone Base local protheus Project
+      ansible.builtin.git:
+        repo: git@git.agroamazonia.io:agro-amazonia/local-base-protheus.git
+        dest: ~/projects/docker/local-base-protheus
+
+    - name: Clone Mobile Project
+      ansible.builtin.git:
+        repo: git@git.agroamazonia.io:agro-amazonia/Mobile.git
+        dest: ~/projects/flutter/mobile
+
+    - name: Clone Mobile Project
+      ansible.builtin.git:
+        repo: git@git.agroamazonia.io:agro-amazonia/ryuk.git
+        dest: ~/projects/golang/ryuk
+
+    - name: Clone Ansible Project
+      ansible.builtin.git:
+        repo: git@git.agroamazonia.io:agro-amazonia/ansible.git
+        dest: ~/projects/iac/ansible
+    
+    - name: Clone Protheus-IAC Project
+      ansible.builtin.git:
+        repo: git@git.agroamazonia.io:agro-amazonia/protheus-infrastructure.git
+        dest: ~/projects/iac/protheus-infrastructure
+
+    - name: Clone MSSQL-IAC Project
+      ansible.builtin.git:
+        repo: git@git.agroamazonia.io:agro-amazonia/mssql-infrastructure.git
+        dest: ~/projects/iac/mssql-infrastructure
