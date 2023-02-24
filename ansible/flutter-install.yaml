@@ -1,0 +1,29 @@
+---
+- name: "Configuracao Arch Linux"
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Cria diretorios para o flutter
+      file:
+        path: "{{ item.dir }}"
+        state: directory
+      with_items:
+        - dir: "~/lib"
+        - dir: "~/bin"
+
+    - name: Clone Protheus Project
+      ansible.builtin.git:
+        repo: https://github.com/flutter/flutter.git
+        dest: ~/lib/flutter
+
+    - name: Cria link simbolico flutter
+      file:
+        src: "~/lib/flutter/bin/flutter"
+        dest: "~/bin/flutter"
+        state: link
+
+    - name: Cria link simbolico dart
+      file:
+        src: "~/lib/flutter/bin/dart"
+        dest: "~/bin/dart"
+        state: link

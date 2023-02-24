@@ -3,14 +3,6 @@
   hosts: localhost
   connection: local
   tasks:
-    - name: Clone Paru helper
-      ansible.builtin.git:
-        repo: https://aur.archlinux.org/paru.git
-        dest: /tmp/paru
-
-    - name: Compila Paru
-      command: chdir=/tmp/paru makepkg -si --noconfirm
-    
     - name: Cria diretorio ssh
       file:
         path: "{{ item.dir }}"
@@ -23,11 +15,42 @@
         path: ~/.ssh/id_rsa
 
     - name: Instala programas e pacotes necessarios
-      command: paru -S --noconfirm {{ item }}
+      command: yay -S --noconfirm {{ item }}
       with_items:
         - code
-        - postman
+        - postman-bin
         - docker
         - kwin-bismuth
         - kvantum-qt5
         - openssh
+        - make
+        - cmake
+        - gcc
+        - gettext
+        - extra-cmake-modules
+        - qt5-tools
+        - qt5-x11extras
+        - kcrash
+        - kglobalaccel
+        - kde-dev-utils
+        - kio
+        - knotifications
+        - kinit
+        - kwin
+        - lightly-qt
+        - bat
+        - ack
+        - exa
+        - terraform
+        - unzip
+        - android-studio
+
+    - name: Clone LightlyShaders
+      ansible.builtin.git:
+        repo: https://github.com/a-parhom/LightlyShaders
+        dest: /tmp/LightlyShaders
+
+    - name: Change the working directory to somedir/ and run the command as db_owner if /path/to/database does not exist
+      ansible.builtin.shell: "cmake ../ -DCMAKE_INSTALL_PREFIX=/usr && make && sudo make install && (kwin_x11 --replace &)"
+      args:
+        chdir: /tmp/LightlyShaders

@@ -1,0 +1,58 @@
+---
+- name: "Configuracao Arch Linux"
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Cria diretorios dos temas
+      file:
+        path: "{{ item.dir }}"
+        state: directory
+      with_items:
+        - dir: "~/.local/share/aurorae"
+        - dir: "~/.local/share/aurorae/themes"
+        - dir: "~/.themes"
+        - dir: "~/.config/neofetch"
+    - name: Copia arquivos ant dark
+      copy:
+        src: "{{ playbook_dir }}/../assets/aurorae/Ant-Dark"
+        dest: ~/.local/share/aurorae/themes
+    - name: Copia colors-schemes
+      copy:
+        src: "{{ playbook_dir }}/../assets/color-schemes"
+        dest: ~/.local/share
+    # - name: Copia icons
+    #   copy:
+    #     src: "{{ playbook_dir }}/../assets/icons"
+    #     dest: ~/.local/share
+    - name: Copia kosole profile
+      copy:
+        src: "{{ playbook_dir }}/../assets/konsole/Ant-Dark.colorscheme"
+        dest: ~/.local/share/konsole
+    - name: Copia config kavantum
+      copy:
+        src: "{{ playbook_dir }}/../assets/kvantum"
+        dest: ~/.config
+    - name: Copia kosole profile
+      copy:
+        src: "{{ playbook_dir }}/../assets/plasmoids"
+        dest: ~/.local/share/plasma
+    - name: Copia plasmoides config
+      copy:
+        src: "{{ playbook_dir }}/../assets/plasma"
+        dest: ~/.local/share/plasma
+    - name: Copia neofetch config
+      copy:
+        src: "{{ playbook_dir }}/../assets/neofetch/config.conf"
+        dest: ~/.config/neofetch
+    - name: Clone Protheus Project
+      ansible.builtin.git:
+        repo: https://github.com/EliverLara/Ant
+        dest: ~/.themes/Ant-Dark
+    - name: Instala plasma
+      command: yay -S --noconfirm {{ item }}
+      with_items:
+        - plasma5-applets-virtual-desktop-bar-git
+        - plasma5-applets-window-appmenu
+        - plasma5-applets-panon
+        - latte-dock
+
